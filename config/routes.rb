@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  resources :dashboards, only: [:show]
+  get 'dashboard', to: 'dashboards#show'
+  resources :dashboards, only: %i[edit update]
   root to: 'dashboards#show'
 end

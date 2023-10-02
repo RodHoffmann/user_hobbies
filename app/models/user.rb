@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_one :dashboard, dependent: :destroy
   has_many :user_hobbies, dependent: :destroy
-  has_many :hobbys, through: :user_hobbies
+  has_many :hobbies, through: :user_hobbies
 
   after_create :create_dashboard!
 
