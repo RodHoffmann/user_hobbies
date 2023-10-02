@@ -5,7 +5,6 @@ class DashboardsController < ApplicationController
 
   def edit
     @hobbies = Hobby.all
-    @dashboard = current_user.dashboard
   end
 
   # def update
