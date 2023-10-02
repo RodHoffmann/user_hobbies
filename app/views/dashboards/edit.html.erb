@@ -1,0 +1,20 @@
+<%= form_for current_user, url: user_registration_path(current_user), html: { method: :put } do |f| %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :wohnort %><br />
+    <%= f.text_field :wohnort, autocomplete: "wohnort" %>
+  </div>
+  <% @hobbies.each do |hobby| %>
+    <%= f.check_box :user_hobby_ids, { multiple: true }, hobby.id, nil %>
+    <%= hobby.name %>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "Update" %>
+  </div>
+<% end %>
