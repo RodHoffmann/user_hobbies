@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_02_211450) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_02_211854) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,6 +25,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_211450) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "user_hobbys", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "hobby_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hobby_id"], name: "index_user_hobbys_on_hobby_id"
+    t.index ["user_id"], name: "index_user_hobbys_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -42,4 +51,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_211450) do
   end
 
   add_foreign_key "dashboards", "users"
+  add_foreign_key "user_hobbys", "hobbies"
+  add_foreign_key "user_hobbys", "users"
 end

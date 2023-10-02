@@ -66,3 +66,5 @@ group :development do
 end
 
 gem "devise"
+
+gem "faker" # for generating fake data for seeds
