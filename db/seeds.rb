@@ -19,8 +19,7 @@ end
 puts "Done!"
 puts "Creating Users..."
 User1 = User.create(name: "Rodrigo", wohnort: "Berlin", email: "rodrigo@example.com", password: "123456")
-dash = Dashboard.new
-User1.dashboard = dash
+
 10.times do
   User.create(name: Faker::Name.name, wohnort: Faker::Address.city,
               email: Faker::Internet.email, password: "123456")
@@ -34,7 +33,7 @@ puts "Done!"
 puts "Adding Hobbies to Users..."
 User.all.each do |user|
   Hobby.all.sample(6).each do |hobby|
-    user.hobbys << hobby
+    UserHobby.create(user: user, hobby: hobby)
   end
 end
 puts "Done!"

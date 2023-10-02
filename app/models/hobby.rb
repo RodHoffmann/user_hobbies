@@ -1,6 +1,6 @@
 class Hobby < ApplicationRecord
-  has_many :user_hobbys, dependent: :destroy
-  has_many :users, through: :user_hobbys
+  has_many :user_hobbies, dependent: :destroy
+  has_many :users, through: :user_hobbies
 
   HOBBY_NAMEN = %w[Malen Wandern Lesen Tanzen Fotografieren
     Schreiben Schwimmen Gartenarbeit Kochen Angeln Singen Basteln
