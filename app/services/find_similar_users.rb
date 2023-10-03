@@ -38,9 +38,9 @@ class FindSimilarUsers
   end
 
   def match(user)
-    count = user.hobbies.count do |hobby|
+    user.hobbies.count do |hobby|
       @user.hobbies.each do |hobby2|
-        bookmark.hobby.name == hobby2.hobby.name
+        hobby2.name == hobby.name
       end
-    end.to_f / user.bookmarks.count.to_f
+    end.to_f / user.user_hobby_ids.count.to_f
   end

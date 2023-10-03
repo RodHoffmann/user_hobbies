@@ -21,7 +21,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # PUT /resource
    def update
-      update_resource(current_user, configure_account_update_params)
+      if current_user.update(user_params)
+        redirect_to dashboard_path
+      else
+        render :edit
+      end
    end
 
   # DELETE /resource
@@ -46,9 +50,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # If you have extra params to permit, append them to the sanitizer.
-   def configure_account_update_params
-     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :wohnort, user_hobby_ids: []])
-   end
+  #  def configure_account_update_params
+  #    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :wohnort, user_hobby_ids: []])
+  #  end
 
   # The path used after sign up.
   # def after_sign_up_path_for(resource)
@@ -61,7 +65,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
   protected
 
-  def update_resource(resource, params)
-    resource.update_without_password(params)
+  # def update_resource(resource, params)
+  #   resource.update_without_password(params)
+  # end
+  def user_params
+    params.require(:user).permit(:name, :wohnort, user_hobby_ids: [])
   end
 end
