@@ -10,7 +10,7 @@
     <%= f.text_field :wohnort, autocomplete: "wohnort" %>
   </div>
   <% @hobbies.each do |hobby| %>
-    <%= f.check_box :user_hobby_ids, { multiple: true }, hobby.id, nil %>
+    <%= f.check_box :hobby_ids, { multiple: true }, hobby.id, nil %>
     <%= hobby.name %>
   <% end %>
 
