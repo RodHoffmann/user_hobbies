@@ -1,11 +1,11 @@
 class DashboardsController < ApplicationController
   def show
     @dashboard = current_user.dashboard
+    @similar_user = FindSimilarUsers.new(current_user).find
   end
 
   def edit
     @hobbies = Hobby.all
-    @dashboard = current_user.dashboard
   end
 
   # def update

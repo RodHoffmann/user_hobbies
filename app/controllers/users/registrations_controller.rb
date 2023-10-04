@@ -20,9 +20,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    if current_user.update(user_params)
+      if user_params[:hobby_ids].nil?
+        current_user.user_hobbies.destroy_all
+      else
+        hobbies = Hobby.find(user_params[:hobby_ids])
+        update_hobby_params(hobbies)
+      end
+    end
+    redirect_to dashboard_path
+  end
 
   # DELETE /resource
   # def destroy
@@ -46,9 +54,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_account_update_params
-  #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
-  # end
+  #  def configure_account_update_params
+  #    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :wohnort, hobby_ids: []])
+  #  end
 
   # The path used after sign up.
   # def after_sign_up_path_for(resource)
@@ -59,4 +67,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+  protected
+
+  # def update_resource(resource, params)
+  #   resource.update_without_password(params)
+  # end
+  def user_params
+    params.require(:user).permit(:name, :wohnort, hobby_ids: [])
+  end
+
+  def update_hobby_params(hobbies)
+    current_user.user_hobbies.destroy_all
+    hobbies.each do |hobby|
+      current_user.hobbies << hobby
+    end
+    current_user.save
+  end
 end

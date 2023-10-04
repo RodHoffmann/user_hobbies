@@ -25,11 +25,6 @@ User1 = User.create(name: "Rodrigo", wohnort: "Berlin", email: "rodrigo@example.
               email: Faker::Internet.email, password: "123456")
 end
 puts "Done!"
-puts "Creating Hobbies..."
-Hobby::HOBBY_NAMEN.each do |hobby_name|
-  Hobby.create(name: hobby_name)
-end
-puts "Done!"
 puts "Adding Hobbies to Users..."
 User.all.each do |user|
   Hobby.all.sample(6).each do |hobby|
