@@ -1,20 +1,30 @@
-<%= form_for current_user, url: user_registration_path, html: { method: :put } do |f| %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
-  </div>
+  <div class="grid h-screen place-items-center">
+    <%= form_for current_user, url: user_registration_path, html: { method: :put } do |f| %>
+    <div class="grid place-items-center mb-10">
+      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div class="field text-center">
+          <%= f.label :name %><br />
+          <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "text-center block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+        </div>
+        <div class="field text-center">
+          <%= f.label :wohnort %><br />
+          <%= f.text_field :wohnort, autocomplete: "wohnort", class: "text-center block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+        </div>
 
-  <div class="field">
-    <%= f.label :wohnort %><br />
-    <%= f.text_field :wohnort, autocomplete: "wohnort" %>
-  </div>
-  <% @hobbies.each do |hobby| %>
-    <%= f.check_box :hobby_ids, { multiple: true }, hobby.id, nil %>
-    <%= hobby.name %>
-  <% end %>
+      </div>
+      <div class="actions mt-5">
+        <%= f.submit "Update", class: "text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" %>
+      </div>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
+      <div class="grid grid-cols-6 gap-4">
+      <% @hobbies.each do |hobby| %>
+        <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
+          <%= f.check_box :hobby_ids, { multiple: true, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" }, hobby.id, nil %>
+          <label for="bordered-checkbox-1" class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"><%= hobby.name %></label>
+        </div>
+      <% end %>
+      </div>
+    <% end %>
   </div>
-<% end %>
