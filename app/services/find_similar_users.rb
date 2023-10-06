@@ -3,7 +3,7 @@ class FindSimilarUsers
     @user = user
     @users = User.all
     # change this value between 0 and 1 for more or less similar users respectively
-    @match_ratio = 0.7
+    @match_ratio = 0.3
   end
 
   def find

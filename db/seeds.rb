@@ -20,7 +20,7 @@ puts "Done!"
 puts "Creating Users..."
 User1 = User.create(name: "Rodrigo", wohnort: "Berlin", email: "rodrigo@example.com", password: "123456")
 
-10.times do
+100.times do
   User.create(name: Faker::Name.name, wohnort: Faker::Address.city,
               email: Faker::Internet.email, password: "123456")
 end
