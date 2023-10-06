@@ -1,7 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe "Dashboards", type: :request do
-  describe "GET /index" do
-    pending "add some examples (or delete) #{__FILE__}"
-  end
-end
+# RSpec.describe "Dashboards", type: :request do
+
+#   describe "GET /index" do
+#     it "returns http success" do
+#       get "/dashboards/index"
+#       expect(response).to have_http_status(:success)
+#     end
+#   end
+# end

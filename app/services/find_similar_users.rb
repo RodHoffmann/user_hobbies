@@ -2,7 +2,7 @@ class FindSimilarUsers
   def initialize(user)
     @user = user
     @users = User.all
-    # change this value between 1 and 0 for more or less similar users respectively
+    # change this value between 0 and 1 for more or less similar users respectively
     @match_ratio = 0.7
   end
 
@@ -10,7 +10,7 @@ class FindSimilarUsers
     matches = []
     match = nil
     matches = @users.select do |user|
-        user != @user && match(user) >= @match_ratio
+      user != @user && match(user) >= @match_ratio
     end
     if check_wohnort(matches).any?
       match = check_wohnort(matches)[rand(check_wohnort(matches).length - 1)]
@@ -39,8 +39,6 @@ class FindSimilarUsers
 
   def match(user)
     user.hobbies.count do |hobby|
-      @user.hobbies.each do |hobby2|
-        hobby2.name == hobby.name
-      end
-    end.to_f / user.user_hobby_ids.count.to_f
+      @user.hobbies.include?(hobby)
+    end.to_f / @user.hobbies.count.to_f
   end
