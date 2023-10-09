@@ -2,7 +2,7 @@ class FindSimilarUsers
   def initialize(user)
     @user = user
     # change this value between 0 and 1 for more or less similar users respectively
-    match_ratio = 0.3
+    match_ratio = 0.7
     @minimum_common_hobbies = (user.hobbies.count * match_ratio).ceil
     @wohnort = user.wohnort.downcase
   end
