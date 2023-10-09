@@ -1,44 +1,39 @@
 class FindSimilarUsers
   def initialize(user)
     @user = user
-    @users = User.all
     # change this value between 0 and 1 for more or less similar users respectively
-    @match_ratio = 0.7
+    match_ratio = 0.3
+    @minimum_common_hobbies = (user.hobbies.count * match_ratio).ceil
+    @wohnort = user.wohnort.downcase
   end
 
   def find
-    matches = []
-    match = nil
-    matches = @users.select do |user|
-      user != @user && match(user) >= @match_ratio
-    end
-    if check_wohnort(matches).any?
-      match = check_wohnort(matches)[rand(check_wohnort(matches).length - 1)]
-    elsif matches.any?
-      match = matches[rand(matches.length - 1)]
-    else
-      match = nil
-    end
-    match
-  end
+    matches_same_city = matching_users_same_city
+    return matches_same_city[rand(matches_same_city.length - 1)] if matches_same_city.any?
 
+    matches_different_city = matching_users_different_city
+    return matches_different_city[rand(matches_different_city.length - 1)] if matches_different_city.any?
 
+    nil
   end
 
   private
 
-  def check_wohnort(matches)
-    if matches.nil?
-      return nil
-    else
-      matches.select do |match|
-          match.wohnort == @user.wohnort
-      end
-    end
+  def matching_users_same_city
+    User.joins(:hobbies)
+        .where.not(id: @user.id) # Exclude the current user
+        .where(wohnort: @wohnort.downcase) # Match users in the same city
+        .where(hobbies: { id: @user.hobby_ids }) # Match users with at least one common hobby
+        .group('users.id')
+        .having('COUNT(DISTINCT hobbies.id) >= ?', @minimum_common_hobbies)
   end
 
-  def match(user)
-    user.hobbies.count do |hobby|
-      @user.hobbies.include?(hobby)
-    end.to_f / @user.hobbies.count.to_f
+  def matching_users_different_city
+    User.joins(:hobbies)
+        .where.not(id: @user.id) # Exclude the current user
+        .where.not(wohnort: @wohnort) # Match users in different cities
+        .where(hobbies: { id: @user.hobby_ids }) # Match users with at least one common hobby
+        .group('users.id')
+        .having('COUNT(DISTINCT hobbies.id) >= ?', @minimum_common_hobbies)
   end
+end
