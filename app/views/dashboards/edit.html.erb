@@ -17,7 +17,7 @@
       </div>
     </div>
 
-      <div class="grid grid-cols-6 gap-4">
+      <div class="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-4">
       <% @hobbies.each do |hobby| %>
         <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
           <%= f.check_box :hobby_ids, { multiple: true, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" }, hobby.id, nil %>
